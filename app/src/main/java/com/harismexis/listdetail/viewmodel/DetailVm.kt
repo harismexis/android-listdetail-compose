@@ -1,9 +1,8 @@
 package com.harismexis.listdetail.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.harismexis.listdetail.repository.RemoteRepository
+import com.harismexis.listdetail.api.Character
 
-class DetailVm(private val repo: RemoteRepository = RemoteRepository()) : ViewModel() {
-
-
+class DetailVm() : ViewModel() {
+    var item: Character? = null
 }

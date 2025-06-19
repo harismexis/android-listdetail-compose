@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.harismexis.listdetail.screens.DETAIL_SCREEN
-import com.harismexis.listdetail.screens.DetailScreen
+import com.harismexis.listdetail.screens.ItemScreen
 import com.harismexis.listdetail.screens.LIST_SCREEN
 import com.harismexis.listdetail.screens.ListScreen
 import com.harismexis.listdetail.screens.PREF_SCREEN
@@ -83,10 +83,13 @@ private fun NavHostBuilder(
         startDestination = LIST_SCREEN,
     ) {
         composable(route = LIST_SCREEN) {
-            ListScreen(listVm)
+            ListScreen(listVm, onItemClick = { item ->
+                detailVm.item = item
+                navController.navigate(route = DETAIL_SCREEN)
+            })
         }
         composable(route = DETAIL_SCREEN) {
-            DetailScreen(detailVm)
+            ItemScreen(detailVm)
         }
         composable(route = PREF_SCREEN) {
             PrefScreen()

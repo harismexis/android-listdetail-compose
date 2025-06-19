@@ -1,5 +1,6 @@
 package com.harismexis.listdetail.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +35,10 @@ import com.harismexis.listdetail.viewmodel.ListVm
 const val LIST_SCREEN = "ListScreen"
 
 @Composable
-fun ListScreen(listVm: ListVm) {
+fun ListScreen(
+    listVm: ListVm,
+    onItemClick: (Character) -> Unit = {}
+) {
     val listState: LazyListState = rememberLazyListState()
     val isLoading: Boolean = listVm.isLoading.collectAsStateWithLifecycle().value
     val items: List<Character> = listVm.models.collectAsStateWithLifecycle().value ?: emptyList()
@@ -46,7 +50,7 @@ fun ListScreen(listVm: ListVm) {
     if (isLoading) {
         LoadingView()
     } else {
-        ListView(items, listState)
+        ListView(items, listState, onItemClick)
     }
 }
 
@@ -54,6 +58,7 @@ fun ListScreen(listVm: ListVm) {
 fun ListView(
     items: List<Character>,
     listState: LazyListState,
+    onItemClick: (Character) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -65,16 +70,21 @@ fun ListView(
             count = items.size,
             contentType = { index -> items[index] },
             itemContent = { index ->
-                ItemRow(items[index])
+                ItemRow(items[index], onItemClick)
             }
         )
     }
 }
 
 @Composable
-private fun ItemRow(item: Character) {
+private fun ItemRow(
+    item: Character,
+    onItemClick: (Character) -> Unit,
+) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().clickable(true) {
+            onItemClick(item)
+        },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -88,7 +98,8 @@ private fun ItemRow(item: Character) {
         Spacer(modifier = Modifier.weight(1f))
         Column {
             SubcomposeAsyncImage(
-                modifier = Modifier.size(100.dp, 200.dp),
+                modifier = Modifier
+                    .size(100.dp, 200.dp),
                 model = item.image,
                 contentDescription = "Translated description of what the image contains",
                 loading = { ImageLoadingView() },
