@@ -58,7 +58,7 @@ fun ListView(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(start = 16.dp, end = 16.dp),
         state = listState,
     ) {
         items(
@@ -78,9 +78,7 @@ private fun ItemRow(item: Character) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(
-
-        ) {
+        Column {
             Text(text = item.nameOrEmpty())
             Text(text = item.statusOrEmpty())
             Text(text = item.speciesOrEmpty())
@@ -88,9 +86,7 @@ private fun ItemRow(item: Character) {
             Text(text = item.genderOrEmpty())
         }
         Spacer(modifier = Modifier.weight(1f))
-        Column(
-
-        ) {
+        Column {
             SubcomposeAsyncImage(
                 modifier = Modifier.size(100.dp, 200.dp),
                 model = item.image,

@@ -17,12 +17,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.harismexis.listdetail.screens.DETAIL_SCREEN
+import com.harismexis.listdetail.screens.DetailScreen
 import com.harismexis.listdetail.screens.LIST_SCREEN
 import com.harismexis.listdetail.screens.ListScreen
 import com.harismexis.listdetail.screens.PREF_SCREEN
 import com.harismexis.listdetail.screens.PrefScreen
 import com.harismexis.listdetail.screens.SmallTopAppBar
 import com.harismexis.listdetail.ui.theme.NasaApisAppTheme
+import com.harismexis.listdetail.viewmodel.DetailVm
 import com.harismexis.listdetail.viewmodel.ListVm
 
 class MainActivity : ComponentActivity() {
@@ -42,6 +45,7 @@ class MainActivity : ComponentActivity() {
     private fun App(
         navController: NavHostController = rememberNavController(),
         listVm: ListVm = viewModel(),
+        detailVm: DetailVm = viewModel(),
     ) {
         val backStackEntry = navController.currentBackStackEntryAsState()
         val isHomeScreen = backStackEntry.value?.destination?.route != LIST_SCREEN
@@ -59,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 )
             },
         ) { padding ->
-            NavHostBuilder(navController, listVm, padding)
+            NavHostBuilder(navController, listVm, detailVm, padding)
         }
     }
 }
@@ -68,6 +72,7 @@ class MainActivity : ComponentActivity() {
 private fun NavHostBuilder(
     navController: NavHostController,
     listVm: ListVm,
+    detailVm: DetailVm,
     padding: PaddingValues,
 ) {
     NavHost(
@@ -77,11 +82,14 @@ private fun NavHostBuilder(
         navController = navController,
         startDestination = LIST_SCREEN,
     ) {
-        composable(route = PREF_SCREEN) {
-            PrefScreen()
-        }
         composable(route = LIST_SCREEN) {
             ListScreen(listVm)
+        }
+        composable(route = DETAIL_SCREEN) {
+            DetailScreen(detailVm)
+        }
+        composable(route = PREF_SCREEN) {
+            PrefScreen()
         }
     }
 }
