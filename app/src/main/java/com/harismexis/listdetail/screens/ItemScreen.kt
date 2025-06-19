@@ -34,7 +34,7 @@ fun ItemScreen(detailVm: DetailVm) {
             .verticalScroll(rememberScrollState()),
     ) {
         SubcomposeAsyncImage(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             model = item.image,
             contentDescription = "Translated description of what the image contains",
             loading = { ImageLoadingView() },
