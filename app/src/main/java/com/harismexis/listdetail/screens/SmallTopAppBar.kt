@@ -23,8 +23,8 @@ import com.harismexis.listdetail.dialog.DatePickerModal
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SmallTopAppBar(
-    onDateSelected: (Long?) -> Unit,
-    onSettingsClicked: () -> Unit,
+    onDateSelected: (Long?) -> Unit = {},
+    onSettingsClicked: () -> Unit = {},
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
 ) {

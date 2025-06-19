@@ -1,7 +1,7 @@
 package com.harismexis.listdetail.repository
 
 import com.google.gson.Gson
-import com.harismexis.listdetail.model.Model
+import com.harismexis.listdetail.api.ApiResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
@@ -18,16 +18,13 @@ class RemoteRepository {
     private val client = OkHttpClient()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun getRemoteData(date: String? = null): Model? {
+    suspend fun getRemoteData(date: String? = null): ApiResponse? {
         return suspendCancellableCoroutine { continuation ->
-            val apiKey = ""
             val httpUrl: HttpUrl = HttpUrl.Builder()
                 .scheme("https")
-                .host("api.nasa.gov")
-                .addPathSegment("planetary")
-                .addPathSegment("apod")
-                .addQueryParameter("date", date)
-                .addQueryParameter("api_key", apiKey)
+                .host("rickandmortyapi.com")
+                .addPathSegment("api")
+                .addPathSegment("character")
                 .build()
 
             val request = Request.Builder()
@@ -45,9 +42,9 @@ class RemoteRepository {
 
                 override fun onResponse(call: Call, response: Response) {
                     val result = response.body?.string() ?: ""
-                    val model = gson.fromJson(result, Model::class.java)
-                    println("$model")
-                    continuation.resume(value = model, onCancellation = null)
+                    val response: ApiResponse = gson.fromJson(result, ApiResponse::class.java)
+                    println("$response")
+                    continuation.resume(value = response, onCancellation = null)
                 }
             })
         }
