@@ -1,5 +1,6 @@
 package com.harismexis.listdetail.screens
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,15 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.harismexis.listdetail.api.Character
-import com.harismexis.listdetail.api.genderOrEmpty
-import com.harismexis.listdetail.api.nameOrEmpty
-import com.harismexis.listdetail.api.speciesOrEmpty
-import com.harismexis.listdetail.api.statusOrEmpty
-import com.harismexis.listdetail.api.typeOrEmpty
+import com.harismexis.listdetail.api.getValueOrNa
 import com.harismexis.listdetail.viewmodel.ListVm
 
 const val LIST_SCREEN = "ListScreen"
@@ -82,24 +80,26 @@ private fun ItemRow(
     onItemClick: (Character) -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable(true) {
-            onItemClick(item)
-        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(true) {
+                onItemClick(item)
+            }
+            .border(width = 2.dp, color = Color.Black)
+            .padding(start = 10.dp, top = 1.dp, bottom = 1.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
-            Text(text = item.nameOrEmpty())
-            Text(text = item.statusOrEmpty())
-            Text(text = item.speciesOrEmpty())
-            Text(text = item.typeOrEmpty())
-            Text(text = item.genderOrEmpty())
+            Text(text = item.name.getValueOrNa())
+            Text(text = item.status.getValueOrNa())
+            Text(text = item.species.getValueOrNa())
         }
         Spacer(modifier = Modifier.weight(1f))
         Column {
             SubcomposeAsyncImage(
                 modifier = Modifier
-                    .size(100.dp, 200.dp),
+                    .size(120.dp, 180.dp),
                 model = item.image,
                 contentDescription = "Translated description of what the image contains",
                 loading = { ImageLoadingView() },
@@ -107,7 +107,6 @@ private fun ItemRow(
             )
         }
     }
-
 }
 
 @Composable

@@ -10,15 +10,10 @@ data class Character(
     val image: String?
 )
 
-fun Character.nameOrEmpty() = name ?: ""
-
-fun Character.statusOrEmpty() = status ?: ""
-
-fun Character.speciesOrEmpty() = species ?: ""
-
-fun Character.typeOrEmpty() = type ?: ""
-
-fun Character.genderOrEmpty() = gender ?: ""
-
-fun Character.imageOrEmpty() = image ?: ""
-
+fun String?.getValueOrNa(): String {
+    return if (!this.isNullOrEmpty()) {
+        this
+    } else {
+        "N/A"
+    }
+}
