@@ -59,12 +59,10 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.compose.lifecycle.runtime)
     implementation(libs.androidx.ui.viewbinding)
-    implementation(libs.androidx.constraintlayout)
 
     implementation(libs.okhttp)
     implementation(libs.gson)
     implementation(libs.coil)
-    implementation(libs.soffrittiplayer)
 
     api(libs.android.compose.navigation)
 

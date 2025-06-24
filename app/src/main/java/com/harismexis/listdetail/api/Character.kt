@@ -11,7 +11,7 @@ data class Character(
 )
 
 fun String?.getValueOrNa(): String {
-    return if (!this.isNullOrEmpty()) {
+    return if (!isNullOrEmpty()) {
         this
     } else {
         "N/A"
