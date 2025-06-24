@@ -18,11 +18,10 @@ class ListVm(private val repo: RemoteRepository = RemoteRepository()) : ViewMode
     private val _isLoading = MutableStateFlow<Boolean>(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    fun updateData(date: Long? = null) {
+    fun updateData() {
         _isLoading.value = true
-        val dateString: String? = if (date == null) null else convertMillisToFormattedDate(date)
         viewModelScope.launch {
-            val response = repo.getRemoteData(dateString)
+            val response = repo.getRemoteData()
             _models.value = response?.results
             _isLoading.value = false
         }
