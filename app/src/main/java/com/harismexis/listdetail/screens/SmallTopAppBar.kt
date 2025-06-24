@@ -17,7 +17,6 @@ import com.harismexis.listdetail.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SmallTopAppBar(
-    onSettingsClicked: () -> Unit = {},
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = {},
 ) {
@@ -36,16 +35,6 @@ fun SmallTopAppBar(
                         contentDescription = "Navigates back"
                     )
                 }
-            }
-        },
-        actions = {
-            IconButton(onClick = {
-                onSettingsClicked()
-            }) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = "Opens Preference Screen"
-                )
             }
         },
         title = {

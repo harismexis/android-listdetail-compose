@@ -48,15 +48,12 @@ class MainActivity : ComponentActivity() {
         detailVm: DetailVm = viewModel(),
     ) {
         val backStackEntry = navController.currentBackStackEntryAsState()
-        val isHomeScreen = backStackEntry.value?.destination?.route != LIST_SCREEN
+        val isHomeScreen = backStackEntry.value?.destination?.route == LIST_SCREEN
 
         Scaffold(
             topBar = {
                 SmallTopAppBar(
-                    onSettingsClicked = {
-                        navController.navigate(route = PREF_SCREEN)
-                    },
-                    canNavigateBack = isHomeScreen,
+                    canNavigateBack = !isHomeScreen,
                     navigateUp = {
                         navController.navigateUp()
                     },
