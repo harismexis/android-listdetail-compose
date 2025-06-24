@@ -24,7 +24,7 @@ import com.harismexis.listdetail.screens.ListScreen
 import com.harismexis.listdetail.screens.PREF_SCREEN
 import com.harismexis.listdetail.screens.PrefScreen
 import com.harismexis.listdetail.screens.SmallTopAppBar
-import com.harismexis.listdetail.ui.theme.NasaApisAppTheme
+import com.harismexis.listdetail.ui.theme.ListDetailAppTheme
 import com.harismexis.listdetail.viewmodel.DetailVm
 import com.harismexis.listdetail.viewmodel.ListVm
 
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NasaApisAppTheme {
+            ListDetailAppTheme {
                 App()
             }
         }
