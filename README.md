@@ -8,6 +8,3 @@
 ### Screenshots
 
 #### Image
-
-
-#### Video
