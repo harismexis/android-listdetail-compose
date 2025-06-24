@@ -3,14 +3,12 @@ package com.harismexis.listdetail.screens
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -36,7 +34,7 @@ const val LIST_SCREEN = "ListScreen"
 @Composable
 fun ListScreen(
     listVm: ListVm,
-    onItemClick: (Character) -> Unit = {}
+    onItemClick: (Character) -> Unit = {},
 ) {
     val listState: LazyListState = rememberLazyListState()
     val isLoading: Boolean = listVm.isLoading.collectAsStateWithLifecycle().value
@@ -104,7 +102,7 @@ private fun ItemRow(
                 modifier = Modifier.size(100.dp, 100.dp),
                 model = item.image,
                 contentDescription = "Translated description of what the image contains",
-                loading = { ImageLoadingView() },
+                loading = { LoadingView() },
                 // error = { ImageErrorView() },
             )
         }
@@ -118,18 +116,6 @@ private fun LoadingView() {
             .padding(16.dp)
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-private fun ImageLoadingView() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(260.dp),
-        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }
