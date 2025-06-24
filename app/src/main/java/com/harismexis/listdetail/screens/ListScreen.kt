@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,8 +62,10 @@ fun ListView(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
+            .padding(start = 8.dp, end = 8.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp),
         state = listState,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(
             count = items.size,
@@ -85,8 +88,8 @@ private fun ItemRow(
             .clickable(true) {
                 onItemClick(item)
             }
-            .border(width = 2.dp, color = Color.Black)
-            .padding(start = 10.dp, top = 1.dp, bottom = 1.dp),
+            .border(width = 1.dp, color = Color.Black)
+            .padding(start = 10.dp, top = 8.dp, bottom = 8.dp, end = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -98,8 +101,7 @@ private fun ItemRow(
         Spacer(modifier = Modifier.weight(1f))
         Column {
             SubcomposeAsyncImage(
-                modifier = Modifier
-                    .size(120.dp, 180.dp),
+                modifier = Modifier.size(100.dp, 100.dp),
                 model = item.image,
                 contentDescription = "Translated description of what the image contains",
                 loading = { ImageLoadingView() },
