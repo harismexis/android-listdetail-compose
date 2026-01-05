@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.repository.RemoteRepository
-import com.harismexis.listdetail.util.convertMillisToFormattedDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
