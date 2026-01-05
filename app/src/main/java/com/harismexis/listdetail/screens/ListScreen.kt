@@ -59,9 +59,8 @@ fun ListView(
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
-        contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp),
+            .fillMaxSize(),
+        contentPadding = PaddingValues(all = 8.dp),
         state = listState,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
