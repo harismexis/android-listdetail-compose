@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.repository.RemoteRepository
+import com.harismexis.listdetail.repository.RemoteRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ListVm(private val repo: RemoteRepository = RemoteRepository()) : ViewModel() {
+class ListVm(private val repo: RemoteRepository = RemoteRepositoryImpl()) : ViewModel() {
 
     private val _models = MutableStateFlow<List<Character>?>(null)
     val models: StateFlow<List<Character>?> = _models.asStateFlow()
