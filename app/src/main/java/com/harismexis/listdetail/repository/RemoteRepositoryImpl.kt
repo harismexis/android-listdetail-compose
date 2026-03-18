@@ -16,13 +16,13 @@ import java.io.IOException
 
 import com.harismexis.listdetail.api.ApiResponse
 
-class RemoteRepositoryImpl: RemoteRepository {
+class RemoteRepositoryImpl : RemoteRepository {
 
     private var gson: Gson = Gson()
     private val client = OkHttpClient()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override suspend fun getRemoteData(): ApiResponse? {
+    override suspend fun getRemoteData(): Result {
         return suspendCancellableCoroutine { continuation ->
             val httpUrl: HttpUrl = HttpUrl.Builder()
                 .scheme("https")
@@ -41,14 +41,31 @@ class RemoteRepositoryImpl: RemoteRepository {
             }
             call.enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    continuation.resume(value = null) { _, _, _ -> }
+                    continuation.resume(value = Result.Failure(e)) { _, _, _ -> }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val result = response.body.string()
-                    val response: ApiResponse = gson.fromJson(result, ApiResponse::class.java)
-                    println("$response")
-                    continuation.resume(value = response) { _, _, _ -> }
+                    runCatching {
+                        response.use {
+                            if (it.isSuccessful) {
+                                println("Unexpected code $it")
+                                val bodyString = it.body.string()
+                                println("raw response: $bodyString")
+                                val model: ApiResponse = gson.fromJson(
+                                    bodyString,
+                                    ApiResponse::class.java,
+                                )
+                                println("parsed response: $response")
+                                continuation.resume(value = Result.Success(model)) { _, _, _ -> }
+                            } else {
+                                val errorBody = it.body.string()
+                                println("raw response (errorBody): $errorBody")
+                                continuation.resume(value = Result.Failure(Throwable(errorBody))) { _, _, _ -> }
+                            }
+                        }
+                    }.onFailure { error ->
+                        continuation.resume(value = Result.Failure(error)) { _, _, _ -> }
+                    }
                 }
             })
         }

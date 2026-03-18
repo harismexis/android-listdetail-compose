@@ -1,5 +1,6 @@
 package com.harismexis.listdetail.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,8 +23,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.api.getValueOrNa
@@ -38,7 +42,14 @@ fun ListScreen(
 ) {
     val listState: LazyListState = rememberLazyListState()
     val isLoading: Boolean = listVm.isLoading.collectAsStateWithLifecycle().value
-    val items: List<Character> = listVm.models.collectAsStateWithLifecycle().value ?: emptyList()
+    val items: List<Character> = listVm.models.collectAsStateWithLifecycle().value
+
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        listVm.error.collect { error ->
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     LaunchedEffect(Unit) {
         listVm.updateData()
