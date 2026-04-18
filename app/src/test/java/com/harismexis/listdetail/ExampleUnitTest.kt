@@ -1,4 +1,4 @@
-package com.harismexis.apod
+package com.harismexis.listdetail
 
 import org.junit.Test
 
