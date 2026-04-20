@@ -1,7 +1,9 @@
 package com.harismexis.listdetail
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,8 +23,6 @@ import com.harismexis.listdetail.screens.DETAIL_SCREEN
 import com.harismexis.listdetail.screens.ItemScreen
 import com.harismexis.listdetail.screens.LIST_SCREEN
 import com.harismexis.listdetail.screens.ListScreen
-import com.harismexis.listdetail.screens.PREF_SCREEN
-import com.harismexis.listdetail.screens.PrefScreen
 import com.harismexis.listdetail.screens.SmallTopAppBar
 import com.harismexis.listdetail.ui.theme.ListDetailAppTheme
 import com.harismexis.listdetail.viewmodel.DetailVm
@@ -33,7 +33,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
         setContent {
             ListDetailAppTheme {
                 App()
@@ -87,9 +89,6 @@ private fun NavHostBuilder(
         }
         composable(route = DETAIL_SCREEN) {
             ItemScreen(detailVm)
-        }
-        composable(route = PREF_SCREEN) {
-            PrefScreen()
         }
     }
 }

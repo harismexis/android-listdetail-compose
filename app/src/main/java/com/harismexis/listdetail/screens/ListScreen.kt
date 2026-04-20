@@ -26,8 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.api.getValueOrNa
@@ -43,11 +44,14 @@ fun ListScreen(
     val listState: LazyListState = rememberLazyListState()
     val isLoading: Boolean = listVm.isLoading.collectAsStateWithLifecycle().value
     val items: List<Character> = listVm.models.collectAsStateWithLifecycle().value
-
+    val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        listVm.error.collect { error ->
-            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            listVm.error.collect { error ->
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
