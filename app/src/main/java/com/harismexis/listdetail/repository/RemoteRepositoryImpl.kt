@@ -48,7 +48,6 @@ class RemoteRepositoryImpl : RemoteRepository {
                     runCatching {
                         response.use {
                             if (it.isSuccessful) {
-                                println("Unexpected code $it")
                                 val bodyString = it.body.string()
                                 println("raw response: $bodyString")
                                 val model: ApiResponse = gson.fromJson(

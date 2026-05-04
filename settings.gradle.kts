@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ListDetailCompose"
+rootProject.name = "ListDetail"
 include(":app")
