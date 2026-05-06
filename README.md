@@ -1,10 +1,6 @@
 ### Overview:
-
+A list detail application using Jetpack Compose.
 
 
 ### Technologies:
-
-
-### Screenshots
-
-#### Image
+Kotlin, Jetpack Compose.
