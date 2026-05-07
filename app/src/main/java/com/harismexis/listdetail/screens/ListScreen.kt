@@ -29,6 +29,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.api.getValueOrNa
@@ -42,50 +45,39 @@ fun ListScreen(
     onItemClick: (Character) -> Unit = {},
 ) {
     val listState: LazyListState = rememberLazyListState()
-    val isLoading: Boolean = listVm.isLoading.collectAsStateWithLifecycle().value
-    val items: List<Character> = listVm.models.collectAsStateWithLifecycle().value
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val context = LocalContext.current
+    val items: LazyPagingItems<Character> = listVm.characters.collectAsLazyPagingItems()
 
-    LaunchedEffect(lifecycleOwner) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            listVm.error.collect { error ->
-                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        listVm.updateData()
-    }
-
-    if (isLoading) {
-        LoadingView()
-    } else {
-        ListView(items, listState, onItemClick)
-    }
-}
-
-@Composable
-fun ListView(
-    items: List<Character>,
-    listState: LazyListState,
-    onItemClick: (Character) -> Unit,
-) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = 8.dp),
         state = listState,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(
-            count = items.size,
-            contentType = { index -> items[index] },
-            itemContent = { index ->
-                ItemRow(items[index], onItemClick)
+            count = items.itemCount,
+            key = { index -> items[index]?.id ?: index }
+        ) { index ->
+            val character = items[index]
+            character?.let {
+                ItemRow(it, onItemClick)
             }
-        )
+        }
+
+        when (items.loadState.append) {
+            is LoadState.Loading -> {
+                item {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is LoadState.Error -> {
+                item {
+                    Text("Error loading more")
+                }
+            }
+
+            else -> Unit
+        }
     }
 }
 

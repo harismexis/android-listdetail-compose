@@ -17,6 +17,7 @@ gson="2.14.0"
 coil="2.7.0"
 uiViewbinding = "1.11.1"
 androidxTestCoreKtx = "1.7.0"
+paging = "3.5.0"
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
@@ -42,6 +43,8 @@ androidx-compose-lifecycle-runtime = { group = "androidx.lifecycle", name = "lif
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

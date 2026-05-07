@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.coil)
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
     api(libs.android.compose.navigation)
 
     testImplementation(libs.junit)

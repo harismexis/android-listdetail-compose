@@ -3,7 +3,7 @@ package com.harismexis.listdetail.repository
 import com.harismexis.listdetail.api.ApiResponse
 
 interface RemoteRepository {
-    suspend fun getRemoteData(): Result?
+    suspend fun getRemoteData(page: Int = 0): Result?
 }
 
 interface Result {

@@ -22,7 +22,7 @@ class RemoteRepositoryImpl : RemoteRepository {
     private val client = OkHttpClient()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override suspend fun getRemoteData(): Result {
+    override suspend fun getRemoteData(page: Int): Result {
         return suspendCancellableCoroutine { continuation ->
             val httpUrl: HttpUrl = HttpUrl.Builder()
                 .scheme("https")
