@@ -37,10 +37,12 @@ class RemoteRepositoryImpl : RemoteRepository {
 
             val call = client.newCall(request)
             continuation.invokeOnCancellation {
+                Log.d(tag, "Coroutine cancelled, cancelling the call")
                 call.cancel()
             }
             call.enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
+                    Log.d(tag, e.message ?: "Unknown error")
                     continuation.resume(value = Result.Failure(e)) { _, _, _ -> }
                 }
 
