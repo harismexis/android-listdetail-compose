@@ -40,36 +40,41 @@ fun ListScreen(
     val listState: LazyListState = rememberLazyListState()
     val items: LazyPagingItems<Character> = listVm.characters.collectAsLazyPagingItems()
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(all = 8.dp),
-        state = listState,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        items(
-            count = items.itemCount,
-            key = { index -> items[index]?.id ?: index }
-        ) { index ->
-            val character = items[index]
-            character?.let {
-                ItemRow(it, onItemClick)
-            }
-        }
-
-        when (items.loadState.append) {
-            is LoadState.Loading -> {
-                item {
-                    CircularProgressIndicator()
+    val isInitialLoading = items.loadState.refresh is LoadState.Loading && items.itemCount == 0
+    if (isInitialLoading) {
+        LoadingView()
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(all = 8.dp),
+            state = listState,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(
+                count = items.itemCount,
+                key = { index -> items[index]?.id ?: index }
+            ) { index ->
+                val character = items[index]
+                character?.let {
+                    ItemRow(it, onItemClick)
                 }
             }
 
-            is LoadState.Error -> {
-                item {
-                    Text("Error loading more")
+            when (items.loadState.append) {
+                is LoadState.Loading -> {
+                    item {
+                        LoadingView()
+                    }
                 }
-            }
 
-            else -> Unit
+                is LoadState.Error -> {
+                    item {
+                        Text("Error loading more")
+                    }
+                }
+
+                else -> Unit
+            }
         }
     }
 }
@@ -95,7 +100,7 @@ private fun ItemRow(
             Text(text = item.status.getValueOrNa())
             Text(text = item.species.getValueOrNa())
         }
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier)
         Column {
             SubcomposeAsyncImage(
                 modifier = Modifier.size(100.dp, 100.dp),
