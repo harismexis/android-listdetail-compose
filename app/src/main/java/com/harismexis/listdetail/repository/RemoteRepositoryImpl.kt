@@ -12,6 +12,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import com.harismexis.listdetail.api.ApiResponse
+import kotlin.coroutines.resumeWithException
 
 class RemoteRepositoryImpl : RemoteRepository {
 
@@ -41,9 +42,10 @@ class RemoteRepositoryImpl : RemoteRepository {
                 call.cancel()
             }
             call.enqueue(object : Callback {
+
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d(tag, e.message ?: "Unknown error")
-                    continuation.resume(value = Result.Failure(e)) { _, _, _ -> }
+                    resumeOnError(e.message)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -56,17 +58,26 @@ class RemoteRepositoryImpl : RemoteRepository {
                                     bodyString,
                                     ApiResponse::class.java,
                                 )
-                                Log.d(tag, "parsed response: $response")
-                                continuation.resume(value = Result.Success(model)) { _, _, _ -> }
+                                Log.d(tag, "parsed response: $model")
+                                if (continuation.isActive) {
+                                    continuation.resume(value = Result.Success(model)) { _, _, _ -> }
+                                }
                             } else {
                                 val errorBody = it.body.string()
                                 Log.d(tag, "error response: $errorBody")
-                                continuation.resume(value = Result.Failure(Throwable(errorBody))) { _, _, _ -> }
+                                resumeOnError(errorBody)
                             }
                         }
                     }.onFailure { error ->
                         Log.d(tag, error.message ?: "Unknown error")
-                        continuation.resume(value = Result.Failure(error)) { _, _, _ -> }
+                        resumeOnError(error.message)
+                    }
+                }
+
+                private fun resumeOnError(error: String?) {
+                    val message = error ?: "Unknown error"
+                    if (continuation.isActive) {
+                        continuation.resume(value = Result.Failure(Throwable(message))) { _, _, _ -> }
                     }
                 }
             })
