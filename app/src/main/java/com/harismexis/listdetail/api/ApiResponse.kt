@@ -35,6 +35,3 @@ fun String?.getValueOrNa(): String {
         "N/A"
     }
 }
-
-
-

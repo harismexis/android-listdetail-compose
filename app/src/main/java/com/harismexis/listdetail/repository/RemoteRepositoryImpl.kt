@@ -1,19 +1,15 @@
 package com.harismexis.listdetail.repository
 
 import com.google.gson.Gson
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
-
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-
 import java.io.IOException
-
 import com.harismexis.listdetail.api.ApiResponse
 
 class RemoteRepositoryImpl : RemoteRepository {
@@ -29,6 +25,7 @@ class RemoteRepositoryImpl : RemoteRepository {
                 .host("rickandmortyapi.com")
                 .addPathSegment("api")
                 .addPathSegment("character")
+                .addQueryParameter("page", page.toString())
                 .build()
 
             val request = Request.Builder()

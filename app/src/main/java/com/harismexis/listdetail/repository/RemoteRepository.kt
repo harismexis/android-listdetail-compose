@@ -6,7 +6,7 @@ interface RemoteRepository {
     suspend fun getRemoteData(page: Int = 0): Result?
 }
 
-interface Result {
-    data class Success(val response: ApiResponse) : Result
-    data class Failure(val error: Throwable) : Result
+sealed class Result {
+    data class Success(val response: ApiResponse) : Result()
+    data class Failure(val error: Throwable) : Result()
 }

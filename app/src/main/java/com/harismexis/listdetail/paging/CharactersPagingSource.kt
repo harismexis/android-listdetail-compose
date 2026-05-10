@@ -7,22 +7,24 @@ import com.harismexis.listdetail.repository.RemoteRepository
 import com.harismexis.listdetail.repository.Result
 
 class CharactersPagingSource(
-    private val api: RemoteRepository
+    private val repo: RemoteRepository
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try {
             val page = params.key ?: 1
-            val result = api.getRemoteData(page)
-            if (result is Result.Failure) {
-                return LoadResult.Error(result.error)
+            when (val result = repo.getRemoteData(page)) {
+                null -> LoadResult.Error(Throwable("Unknown error"))
+                is Result.Failure -> LoadResult.Error(result.error)
+                is Result.Success -> {
+                    val response = result.response
+                    LoadResult.Page(
+                        data = response.results ?: emptyList(),
+                        prevKey = if (page == 1) null else page - 1,
+                        nextKey = if (response.info?.next == null) null else page + 1
+                    )
+                }
             }
-            val response = (result as Result.Success).response
-            LoadResult.Page(
-                data = response.results ?: emptyList(),
-                prevKey = if (page == 1) null else page - 1,
-                nextKey = if (response.info?.next == null) null else page + 1
-            )
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
