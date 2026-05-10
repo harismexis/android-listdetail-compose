@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -87,7 +88,7 @@ private fun ItemRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(true) {
+            .clickable {
                 onItemClick(item)
             }
             .border(width = 1.dp, color = Color.Black)
@@ -106,7 +107,8 @@ private fun ItemRow(
                 modifier = Modifier.size(100.dp, 100.dp),
                 model = item.image,
                 contentDescription = "Translated description of what the image contains",
-                loading = { LoadingView() },
+                loading = { ImageLoadingView() },
+                contentScale = ContentScale.Crop
                 // error = { ImageErrorView() },
             )
         }
@@ -119,6 +121,16 @@ private fun LoadingView() {
         modifier = Modifier
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+private fun ImageLoadingView() {
+    Box(
+        modifier = Modifier.size(100.dp),
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }
