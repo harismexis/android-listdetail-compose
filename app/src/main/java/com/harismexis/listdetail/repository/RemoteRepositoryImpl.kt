@@ -58,7 +58,7 @@ class RemoteRepositoryImpl : RemoteRepository {
                                 continuation.resume(value = Result.Success(model)) { _, _, _ -> }
                             } else {
                                 val errorBody = it.body.string()
-                                Log.d(tag, "raw response (errorBody): $errorBody")
+                                Log.d(tag, "error response: $errorBody")
                                 continuation.resume(value = Result.Failure(Throwable(errorBody))) { _, _, _ -> }
                             }
                         }
