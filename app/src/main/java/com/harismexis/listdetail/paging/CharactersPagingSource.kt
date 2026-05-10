@@ -1,14 +1,17 @@
 package com.harismexis.listdetail.paging
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.repository.RemoteRepository
+import com.harismexis.listdetail.repository.RemoteRepositoryImpl
 import com.harismexis.listdetail.repository.Result
 import kotlin.coroutines.cancellation.CancellationException
 
 class CharactersPagingSource(
-    private val repo: RemoteRepository
+    private val repo: RemoteRepository = RemoteRepositoryImpl()
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
@@ -38,5 +41,16 @@ class CharactersPagingSource(
 //                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
 //        }
         return null
+    }
+
+    fun getCharactersPager(): Pager<Int, Character> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                prefetchDistance = 5,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { this }
+        )
     }
 }
