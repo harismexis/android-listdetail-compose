@@ -1,7 +1,7 @@
 package com.harismexis.listdetail.api
 
 /**
- * API response model for the Rick and Morty API.
+ * API response from Rick and Morty API.
  * https://rickandmortyapi.com/documentation
  * Example url:
  * https://rickandmortyapi.com/api/character/?page=2

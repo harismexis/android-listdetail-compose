@@ -53,9 +53,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.fragment)
     implementation(libs.androidx.compose.lifecycle.runtime)
-    implementation(libs.androidx.ui.viewbinding)
 
     implementation(libs.okhttp)
     implementation(libs.gson)
