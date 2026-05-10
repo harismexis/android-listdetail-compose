@@ -1,5 +1,6 @@
 package com.harismexis.listdetail.repository
 
+import android.util.Log
 import com.google.gson.Gson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -14,7 +15,9 @@ import com.harismexis.listdetail.api.ApiResponse
 
 class RemoteRepositoryImpl : RemoteRepository {
 
-    private var gson: Gson = Gson()
+    private val tag = "RemoteRepositoryImpl"
+
+    private val gson = Gson()
     private val client = OkHttpClient()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -46,20 +49,21 @@ class RemoteRepositoryImpl : RemoteRepository {
                         response.use {
                             if (it.isSuccessful) {
                                 val bodyString = it.body.string()
-                                println("raw response: $bodyString")
+                                Log.d(tag, "raw response: $bodyString")
                                 val model: ApiResponse = gson.fromJson(
                                     bodyString,
                                     ApiResponse::class.java,
                                 )
-                                println("parsed response: $response")
+                                Log.d(tag, "parsed response: $response")
                                 continuation.resume(value = Result.Success(model)) { _, _, _ -> }
                             } else {
                                 val errorBody = it.body.string()
-                                println("raw response (errorBody): $errorBody")
+                                Log.d(tag, "raw response (errorBody): $errorBody")
                                 continuation.resume(value = Result.Failure(Throwable(errorBody))) { _, _, _ -> }
                             }
                         }
                     }.onFailure { error ->
+                        Log.d(tag, error.message ?: "Unknown error")
                         continuation.resume(value = Result.Failure(error)) { _, _, _ -> }
                     }
                 }

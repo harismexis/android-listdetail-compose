@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.harismexis.listdetail.api.Character
 import com.harismexis.listdetail.repository.RemoteRepository
 import com.harismexis.listdetail.repository.Result
+import kotlin.coroutines.cancellation.CancellationException
 
 class CharactersPagingSource(
     private val repo: RemoteRepository
@@ -26,14 +27,16 @@ class CharactersPagingSource(
                 }
             }
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             LoadResult.Error(e)
         }
     }
 
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
-        return state.anchorPosition?.let { position ->
-            state.closestPageToPosition(position)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
-        }
+//        return state.anchorPosition?.let { position ->
+//            state.closestPageToPosition(position)?.prevKey?.plus(1)
+//                ?: state.closestPageToPosition(position)?.nextKey?.minus(1)
+//        }
+        return null
     }
 }
