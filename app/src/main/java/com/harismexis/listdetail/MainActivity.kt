@@ -81,7 +81,7 @@ private fun NavHostBuilder(
     ) {
         composable(route = LIST_SCREEN) {
             ListScreen(listVm, onItemClick = { item ->
-                detailVm.item = item
+                detailVm.setItem(item)
                 navController.navigate(route = DETAIL_SCREEN)
             })
         }
