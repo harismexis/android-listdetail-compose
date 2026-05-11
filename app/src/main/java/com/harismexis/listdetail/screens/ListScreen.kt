@@ -101,17 +101,14 @@ private fun ItemRow(
             Text(text = item.status.getValueOrNa())
             Text(text = item.species.getValueOrNa())
         }
-        Spacer(modifier = Modifier)
-        Column {
-            SubcomposeAsyncImage(
-                modifier = Modifier.size(100.dp, 100.dp),
-                model = item.image,
-                contentDescription = "Translated description of what the image contains",
-                loading = { ImageLoadingView() },
-                contentScale = ContentScale.Crop
-                // error = { ImageErrorView() },
-            )
-        }
+        SubcomposeAsyncImage(
+            modifier = Modifier.size(100.dp, 100.dp),
+            model = item.image,
+            contentDescription = "Translated description of what the image contains",
+            loading = { ImageLoadingView() },
+            contentScale = ContentScale.Crop
+            // error = { ImageErrorView() },
+        )
     }
 }
 
