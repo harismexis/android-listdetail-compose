@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -46,8 +47,8 @@ class MainActivity : ComponentActivity() {
         listVm: ListVm = viewModel(),
         detailVm: DetailVm = viewModel(),
     ) {
-        val backStackEntry = navController.currentBackStackEntryAsState()
-        val isHomeScreen = backStackEntry.value?.destination?.route == LIST_SCREEN
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val isHomeScreen = backStackEntry?.destination?.route == LIST_SCREEN
 
         Scaffold(
             topBar = {

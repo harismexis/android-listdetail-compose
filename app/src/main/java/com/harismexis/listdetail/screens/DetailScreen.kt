@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,8 +38,7 @@ fun ItemScreen(detailVm: DetailVm) {
                 .padding(8.dp),
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
                 SubcomposeAsyncImage(
@@ -55,7 +53,7 @@ fun ItemScreen(detailVm: DetailVm) {
             Spacer(
                 modifier = Modifier
                     .height(8.dp)
-                    .fillMaxHeight()
+                    .fillMaxWidth()
             )
 
             InfoText(text = "Name: ${item.name.getValueOrNa()}")

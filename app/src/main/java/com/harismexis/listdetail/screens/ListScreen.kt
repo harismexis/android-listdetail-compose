@@ -114,8 +114,7 @@ private fun ItemRow(
 @Composable
 private fun LoadingView() {
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator()
