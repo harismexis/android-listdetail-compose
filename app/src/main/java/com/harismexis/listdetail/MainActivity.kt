@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,33 +59,23 @@ class MainActivity : ComponentActivity() {
                 )
             },
         ) { padding ->
-            NavHostBuilder(navController, listVm, detailVm, padding)
-        }
-    }
-}
-
-@Composable
-private fun NavHostBuilder(
-    navController: NavHostController,
-    listVm: ListVm,
-    detailVm: DetailVm,
-    padding: PaddingValues,
-) {
-    NavHost(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding),
-        navController = navController,
-        startDestination = LIST_SCREEN,
-    ) {
-        composable(route = LIST_SCREEN) {
-            ListScreen(listVm, onItemClick = { item ->
-                detailVm.setItem(item)
-                navController.navigate(route = DETAIL_SCREEN)
-            })
-        }
-        composable(route = DETAIL_SCREEN) {
-            ItemScreen(detailVm)
+            NavHost(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                navController = navController,
+                startDestination = LIST_SCREEN,
+            ) {
+                composable(route = LIST_SCREEN) {
+                    ListScreen(listVm, onItemClick = { item ->
+                        detailVm.setItem(item)
+                        navController.navigate(route = DETAIL_SCREEN)
+                    })
+                }
+                composable(route = DETAIL_SCREEN) {
+                    ItemScreen(detailVm)
+                }
+            }
         }
     }
 }
