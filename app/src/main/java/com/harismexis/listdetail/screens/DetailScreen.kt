@@ -3,8 +3,11 @@ package com.harismexis.listdetail.screens
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,20 +27,20 @@ fun ItemScreen(detailVm: DetailVm) {
     val item = detailVm.item
     if (item == null) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "No item selected")
+            Text(text = "No item found")
         }
     } else {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+                    .fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
                 SubcomposeAsyncImage(
@@ -48,23 +51,30 @@ fun ItemScreen(detailVm: DetailVm) {
                     // error = { ImageErrorView() },
                 )
             }
-            CustomText(text = item.name.getValueOrNa())
-            CustomText(text = item.status.getValueOrNa())
-            CustomText(text = item.species.getValueOrNa())
-            CustomText(text = item.type.getValueOrNa())
-            CustomText(text = item.gender.getValueOrNa())
+
+            Spacer(
+                modifier = Modifier
+                    .height(8.dp)
+                    .fillMaxHeight()
+            )
+
+            InfoText(text = "Name: ${item.name.getValueOrNa()}")
+            InfoText(text = "Status: ${item.status.getValueOrNa()}")
+            InfoText(text = "Species: ${item.species.getValueOrNa()}")
+            InfoText(text = "Type: ${item.type.getValueOrNa()}")
+            InfoText(text = "Gender: ${item.gender.getValueOrNa()}")
         }
     }
 }
 
 @Composable
-private fun CustomText(
+private fun InfoText(
     text: String,
-    paddingValues: PaddingValues = PaddingValues(start = 8.dp, end = 8.dp),
+    padding: PaddingValues = PaddingValues(0.dp),
 ) {
     Text(
         text = text,
-        modifier = Modifier.padding(paddingValues)
+        modifier = Modifier.padding(padding)
     )
 }
 
