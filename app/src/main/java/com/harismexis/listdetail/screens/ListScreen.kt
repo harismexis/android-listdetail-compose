@@ -68,8 +68,9 @@ fun ListScreen(
                 }
 
                 is LoadState.Error -> {
+                    val error = (items.loadState.append as LoadState.Error).error
                     item {
-                        Text("Error loading more")
+                        Text("Error: ${error.message}")
                     }
                 }
 

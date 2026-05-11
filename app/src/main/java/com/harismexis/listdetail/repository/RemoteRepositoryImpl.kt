@@ -12,7 +12,6 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import com.harismexis.listdetail.api.ApiResponse
-import kotlin.coroutines.resumeWithException
 
 class RemoteRepositoryImpl : RemoteRepository {
 
@@ -45,6 +44,11 @@ class RemoteRepositoryImpl : RemoteRepository {
 
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d(tag, e.message ?: "Unknown error")
+                    if (call.isCanceled() // continuation.isCancelled
+                    ) {
+                        Log.d(tag, "onFailure: Coroutine already cancelled, ignoring failure")
+                        return
+                    }
                     resumeOnError(e.message)
                 }
 
