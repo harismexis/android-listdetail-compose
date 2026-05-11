@@ -5,9 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,30 +23,39 @@ const val DETAIL_SCREEN = "DetailScreen"
 
 @Composable
 fun ItemScreen(detailVm: DetailVm) {
-    val item = detailVm.item ?: return
-    Column(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    val item = detailVm.item
+    if (item == null) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            contentAlignment = Alignment.TopCenter,
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center,
         ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier.fillMaxWidth(),
-                model = item.image,
-                contentDescription = "Translated description of what the image contains",
-                loading = { ImageLoadingView() },
-                // error = { ImageErrorView() },
-            )
+            Text(text = "No item selected")
         }
-
-        CustomText(text = item.name.getValueOrNa())
-        CustomText(text = item.status.getValueOrNa())
-        CustomText(text = item.species.getValueOrNa())
-        CustomText(text = item.type.getValueOrNa())
-        CustomText(text = item.gender.getValueOrNa())
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                SubcomposeAsyncImage(
+                    modifier = Modifier.fillMaxWidth(),
+                    model = item.image,
+                    contentDescription = "Translated description of what the image contains",
+                    loading = { ImageLoadingView() },
+                    // error = { ImageErrorView() },
+                )
+            }
+            CustomText(text = item.name.getValueOrNa())
+            CustomText(text = item.status.getValueOrNa())
+            CustomText(text = item.species.getValueOrNa())
+            CustomText(text = item.type.getValueOrNa())
+            CustomText(text = item.gender.getValueOrNa())
+        }
     }
 }
 
@@ -63,23 +71,9 @@ private fun CustomText(
 }
 
 @Composable
-private fun LoadingView() {
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
 private fun ImageLoadingView() {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(260.dp),
+        modifier = Modifier.size(100.dp),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
