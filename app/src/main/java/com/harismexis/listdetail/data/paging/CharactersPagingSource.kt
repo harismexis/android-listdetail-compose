@@ -4,20 +4,20 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.harismexis.listdetail.data.RetrofitProvider
 import com.harismexis.listdetail.data.api.Character
 import com.harismexis.listdetail.data.repository.RemoteRepository
-import com.harismexis.listdetail.data.repository.RemoteRepositoryImpl
 import com.harismexis.listdetail.data.repository.RemoteRepository.Result
 import kotlin.coroutines.cancellation.CancellationException
 
 class CharactersPagingSource(
-    private val repo: RemoteRepository = RemoteRepositoryImpl()
+    private val repo: RemoteRepository = RemoteRepository(RetrofitProvider.api)
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         return try {
             val page = params.key ?: 1
-            when (val result = repo.getRemoteData(page)) {
+            when (val result = repo.getCharacters(page)) {
                 null -> LoadResult.Error(Throwable("Unknown error"))
                 is Result.Failure -> LoadResult.Error(result.error)
                 is Result.Success -> {

@@ -1,16 +1,22 @@
 package com.harismexis.listdetail.data.api
 
+import kotlinx.serialization.Serializable
+
 /**
  * API response from Rick and Morty API.
- * https://rickandmortyapi.com/documentation
+ * The response contains a list of characters and pagination info.
  * Example url:
  * https://rickandmortyapi.com/api/character/?page=2
+ * More info:
+ * https://rickandmortyapi.com/documentation/
  */
+@Serializable
 data class ApiResponse(
     val info: Info?,
     val results: List<Character>?,
 )
 
+@Serializable
 data class Character(
     val id: Int?,
     val name: String?,
@@ -21,6 +27,7 @@ data class Character(
     val image: String?
 )
 
+@Serializable
 data class Info(
     val count: Int,
     val pages: Int,
