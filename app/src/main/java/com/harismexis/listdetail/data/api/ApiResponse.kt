@@ -1,4 +1,4 @@
-package com.harismexis.listdetail.api
+package com.harismexis.listdetail.data.api
 
 /**
  * API response from Rick and Morty API.

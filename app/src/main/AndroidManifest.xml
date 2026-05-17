@@ -17,7 +17,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name="com.harismexis.listdetail.MainActivity"
+            android:name="com.harismexis.listdetail.ui.screens.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ListDetail">
             <intent-filter>

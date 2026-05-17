@@ -1,4 +1,4 @@
-package com.harismexis.listdetail.repository
+package com.harismexis.listdetail.data.repository
 
 import android.util.Log
 import com.google.gson.Gson
@@ -11,7 +11,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
-import com.harismexis.listdetail.api.ApiResponse
+import com.harismexis.listdetail.data.api.ApiResponse
+import com.harismexis.listdetail.data.repository.RemoteRepository.Result
 
 class RemoteRepositoryImpl : RemoteRepository {
 

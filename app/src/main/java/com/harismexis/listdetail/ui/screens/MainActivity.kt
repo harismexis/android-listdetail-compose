@@ -1,4 +1,4 @@
-package com.harismexis.listdetail
+package com.harismexis.listdetail.ui.screens
 
 import android.graphics.Color
 import android.os.Bundle
@@ -19,21 +19,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.harismexis.listdetail.screens.DETAIL_SCREEN
-import com.harismexis.listdetail.screens.ItemScreen
-import com.harismexis.listdetail.screens.LIST_SCREEN
-import com.harismexis.listdetail.screens.ListScreen
-import com.harismexis.listdetail.screens.SmallTopAppBar
 import com.harismexis.listdetail.ui.theme.ListDetailAppTheme
-import com.harismexis.listdetail.viewmodel.DetailVm
-import com.harismexis.listdetail.viewmodel.ListVm
+import com.harismexis.listdetail.ui.viewmodel.DetailVm
+import com.harismexis.listdetail.ui.viewmodel.ListVm
 
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.Companion.dark(Color.TRANSPARENT))
         setContent {
             ListDetailAppTheme {
                 App()
@@ -61,7 +56,7 @@ class MainActivity : ComponentActivity() {
             },
         ) { padding ->
             NavHost(
-                modifier = Modifier
+                modifier = Modifier.Companion
                     .fillMaxSize()
                     .padding(padding),
                 navController = navController,

@@ -1,6 +1,7 @@
 package com.harismexis.listdetail
 
 import androidx.test.core.app.ActivityScenario
+import com.harismexis.listdetail.ui.screens.MainActivity
 
 import junit.framework.TestCase.assertNotNull
 

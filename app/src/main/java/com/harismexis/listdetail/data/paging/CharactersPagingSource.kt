@@ -1,13 +1,13 @@
-package com.harismexis.listdetail.paging
+package com.harismexis.listdetail.data.paging
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.harismexis.listdetail.api.Character
-import com.harismexis.listdetail.repository.RemoteRepository
-import com.harismexis.listdetail.repository.RemoteRepositoryImpl
-import com.harismexis.listdetail.repository.Result
+import com.harismexis.listdetail.data.api.Character
+import com.harismexis.listdetail.data.repository.RemoteRepository
+import com.harismexis.listdetail.data.repository.RemoteRepositoryImpl
+import com.harismexis.listdetail.data.repository.RemoteRepository.Result
 import kotlin.coroutines.cancellation.CancellationException
 
 class CharactersPagingSource(

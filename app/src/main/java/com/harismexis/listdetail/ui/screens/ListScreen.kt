@@ -1,4 +1,4 @@
-package com.harismexis.listdetail.screens
+package com.harismexis.listdetail.ui.screens
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,9 +26,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
-import com.harismexis.listdetail.api.Character
-import com.harismexis.listdetail.api.getValueOrNa
-import com.harismexis.listdetail.viewmodel.ListVm
+import com.harismexis.listdetail.data.api.Character
+import com.harismexis.listdetail.data.api.getValueOrNa
+import com.harismexis.listdetail.ui.viewmodel.ListVm
 
 const val LIST_SCREEN = "ListScreen"
 

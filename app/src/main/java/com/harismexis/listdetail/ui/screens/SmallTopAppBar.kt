@@ -1,7 +1,5 @@
-package com.harismexis.listdetail.screens
+package com.harismexis.listdetail.ui.screens
 
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,6 +39,5 @@ fun SmallTopAppBar(
         title = {
             Text("Rick & Morty")
         },
-        windowInsets = WindowInsets.statusBars,
     )
 }

@@ -1,10 +1,10 @@
-package com.harismexis.listdetail.viewmodel
+package com.harismexis.listdetail.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.harismexis.listdetail.api.Character
+import com.harismexis.listdetail.data.api.Character
 
 class DetailVm : ViewModel() {
 

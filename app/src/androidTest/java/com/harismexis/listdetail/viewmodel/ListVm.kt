@@ -3,9 +3,9 @@ package com.harismexis.listdetail.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.harismexis.listdetail.api.Character
-import com.harismexis.listdetail.repository.RemoteRepository
-import com.harismexis.listdetail.repository.RemoteRepositoryImpl
+import com.harismexis.listdetail.data.api.Character
+import com.harismexis.listdetail.data.repository.RemoteRepository
+import com.harismexis.listdetail.data.repository.RemoteRepositoryImpl
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 import kotlinx.coroutines.flow.MutableStateFlow

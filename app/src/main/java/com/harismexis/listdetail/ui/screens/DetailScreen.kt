@@ -1,4 +1,4 @@
-package com.harismexis.listdetail.screens
+package com.harismexis.listdetail.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
-import com.harismexis.listdetail.api.getValueOrNa
-import com.harismexis.listdetail.viewmodel.DetailVm
+import com.harismexis.listdetail.data.api.getValueOrNa
+import com.harismexis.listdetail.ui.viewmodel.DetailVm
 
 const val DETAIL_SCREEN = "DetailScreen"
 
